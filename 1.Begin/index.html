@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <script>
+        //відобразити сповіщення у Веб браузері.
+        //для відображення сповіщення використовує стандартні засобі 
+        //веб браузера.
+        //alert("Привіт Це JavaScript");
+        function myFunc() {
+            var a=24;  //дуже старий спосіб, краще ним не користуватися
+        }
+
+        //+, -, *, /, 
+        //==, ===
+
+        b= {
+            name: 'Vova',
+        };
+
+        a=23;
+        //Іде превірка типу даних.
+        if(a==='23') {
+            console.log("a == '23'");
+        }
+        else {
+            console.log("a !== '23'");
+        }
+
+        myFunc();
+        
+        var a=56; //ми маємо змінну. Кращий спосіб
+        A=90;
+        /*
+        if(1==1) {
+            let a=58;
+        } */
+        let isMan = false;
+        ch = 'ch'
+        myCh = "Hello";
+        tt=Number(4.98)
+        salo = null;
+        myStep = undefined;
+        myTT = [3,5];
+        myTT2 = {name: 'Vova'};
+        mySubl = Symbol('12');
+        myBig = BigInt(23);
+
+        // a="Ковбаска";
+        
+
+        console.log("Тип даних ",a, typeof(a));
+        console.log("Тип даних ",isMan, typeof(isMan));
+        console.log("Тип даних ",ch, typeof(ch));
+        console.log("Тип даних ",myCh, typeof(myCh));
+        console.log("Тип даних ",tt, typeof(tt));
+        console.log("Тип даних ",salo, typeof(salo));
+        console.log("Тип даних ",myStep, typeof(myStep));
+        console.log("Тип даних ",myTT, typeof(myTT));
+        console.log("Тип даних ",myTT2, typeof(myTT2));
+        console.log("Тип даних ",mySubl, typeof(mySubl));
+        console.log("Тип даних ",myBig, typeof(myBig));
+
+        //Оператори умови ті в самі, що у C#
+        //if, else, switch, for, while, do while - 
+        //break, contitue, 
+        //foreach - немає foreach(var item in list) 
+
+
+
+    </script>
+    <h1>Розробка веб сайту Привіт</h1>
+
+    <button onclick="myTest(this)">Привіт козак</button>
+
+    <script>
+        var conter = 1;
+        //стрелочка функція
+        const myTest = (e) => {
+           let text = e.innerHTML;
+           e.innerHTML = conter++;
+            console.log("My Test виклик",text);
+        }
+
+        myTest();
+        function myFunc(n) {
+            console.log("n = ", n);
+            return n+1;
+        } 
+        let result = myFunc(2);
+        console.log("Result =", result);
+    </script>
+    
+
+    <script>
+        var n = 10;
+        for(let i = 0; i<n; i++) 
+        {
+            document.write(`<h2>${i}</h2>`);
+        }
+    </script>
+</body>
+</html>
