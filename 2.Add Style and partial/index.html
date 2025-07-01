@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Головна сторінка</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/site.js"></script>
+</head>
+<body>
+    <script>loadDOM("/_header.html")</script>
+
+    <h1 class="text-center">Користувачі</h1>
+
+    <div class="container">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Last</th>
+                <th scope="col">First</th>
+              </tr>
+            </thead>
+            <tbody id="listUsers">
+              
+            </tbody>
+        </table>
+    </div>
+    
+
+    <script>
+
+        //Чекаємо завантаження усіх елементів
+        window.onload = () => {
+
+            var usersJson = localStorage.users;
+            console.log("UsersJson", usersJson);
+            var list = JSON.parse(usersJson);
+
+            let content = "";
+            for(let i=0;i<list.length;i++) {
+                content += 
+                `
+                <tr>
+                    <th scope="row">${i+1}</th>
+                    <td>${list[i].lastName}</td>
+                    <td>${list[i].firstName}</td>
+                </tr>
+                `;
+            }
+
+            listUsers = document.getElementById("listUsers");
+            //Астоматично знайшов елемент по Id
+            listUsers.innerHTML = content;
+
+            console.log("list", list.length);
+        }
+
+        //innerHTML - Можна змінювати вміст компонента повністю
+        
+    </script>
+
+
+    <script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
