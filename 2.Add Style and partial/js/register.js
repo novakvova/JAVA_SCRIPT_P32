@@ -21,6 +21,8 @@ const onSubmitForm = (event) => {
 }
 
 window.onload = () => {
+    var usersJson = localStorage.users ?? "[]"; 
+    listUsers = JSON.parse(usersJson);
     console.log("onload");
     const btnRegister =  document.getElementById("btnRegister");
     //Повісим обробник натиску на кнопку
