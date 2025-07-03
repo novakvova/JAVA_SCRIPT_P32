@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Головна сторінка</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/cropper.min.css">
     <link rel="stylesheet" href="/css/style.css">
     <script src="/js/site.js"></script>
     <script src="/js/register.js"></script>
@@ -45,9 +46,14 @@
 
     <script>loadDOM("/partial/modal_photo.html")</script>
     <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/cropper.min.js"></script>
 
     <script>
+        let cropper; //Обєкт cropper
+
         const formFile = document.getElementById("formFile");
+
+        let imageModal = document.getElementById("imageModal");
 
         const selectEventImage = (event) => {
             const files = event.target.files;
@@ -56,8 +62,17 @@
                 console.log("type = ", file.type);
                 //Перевіряємо чи ми обрали фото
                 if (/^image\/\w+/.test(file.type)) {
+
+                    if(cropper)
+                        cropper.destroy(); //якщо інсує уже створений
+
                     const urlImage = URL.createObjectURL(file);
-                    document.getElementById("imageModal").src=urlImage;
+                    imageModal.src=urlImage;
+
+                    cropper = new Cropper(imageModal, {
+                        aspectRatio: 1/1,
+                        viewMode: 1
+                    });
                     //console.log("urlImage", urlImage);
                     document.getElementById("btnViewModal").click();
 
@@ -65,9 +80,6 @@
                 else {
                     alert("Оберіть файл зображення");
                 }
-
-                
-                //console.log("Select images", files);
             }
             else {
                 alert("Оберіть фото");
