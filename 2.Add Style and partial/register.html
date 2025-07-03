@@ -35,9 +35,9 @@
                   <input class="form-control" type="file" id="formFile" multiple accept="image/*">
                 </div>
 
-                <button type="button" id="btnViewModal" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crop-image-modal">
+                <!-- <button type="button" id="btnViewModal" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crop-image-modal">
                     Обрати фото
-                </button>
+                </button> -->
                 
                 <button type="submit" class="btn btn-primary" id="btnRegister">Реєстрація</button>
               </form>
@@ -50,10 +50,14 @@
 
     <script>
         let cropper; //Обєкт cropper
+        const modal = document.getElementById('cropperModal');
 
         const formFile = document.getElementById("formFile");
 
         let imageModal = document.getElementById("imageModal");
+
+        const cropImageModal = document.getElementById('crop-image-modal');
+        const myModalBootstrap = new bootstrap.Modal(cropImageModal, {})
 
         const selectEventImage = (event) => {
             const files = event.target.files;
@@ -69,12 +73,7 @@
                     const urlImage = URL.createObjectURL(file);
                     imageModal.src=urlImage;
 
-                    cropper = new Cropper(imageModal, {
-                        aspectRatio: 1/1,
-                        viewMode: 1
-                    });
-                    //console.log("urlImage", urlImage);
-                    document.getElementById("btnViewModal").click();
+                    myModalBootstrap.show();
 
                 }
                 else {
@@ -93,7 +92,15 @@
         formFile.addEventListener("change", (event) => {
             selectEventImage(event);
         });
-        
+
+        cropImageModal.addEventListener('shown.bs.modal', function () {
+            console.log("cropper run");
+            cropper = new Cropper(imageModal, {
+                aspectRatio: 1,
+                viewMode: 1,
+            });
+        });
+
         console.log("formFile", formFile);
         
     </script>
