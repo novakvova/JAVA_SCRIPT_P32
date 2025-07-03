@@ -28,13 +28,63 @@
                     <label for="firstName" class="form-label">Ім'я</label>
                     <input type="text" class="form-control" id="firstName" name="firstName">
                 </div>
+
+                <div class="mb-3">
+                  <label for="formFile" class="form-label">Оберіть фото</label>
+                  <input class="form-control" type="file" id="formFile" multiple accept="image/*">
+                </div>
+
+                <button type="button" id="btnViewModal" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crop-image-modal">
+                    Обрати фото
+                </button>
                 
                 <button type="submit" class="btn btn-primary" id="btnRegister">Реєстрація</button>
               </form>
         </div>
     </div>
 
-
+    <script>loadDOM("/partial/modal_photo.html")</script>
     <script src="/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        const formFile = document.getElementById("formFile");
+
+        const selectEventImage = (event) => {
+            const files = event.target.files;
+            if (files && files.length) {
+                const file = files[0];
+                console.log("type = ", file.type);
+                //Перевіряємо чи ми обрали фото
+                if (/^image\/\w+/.test(file.type)) {
+                    const urlImage = URL.createObjectURL(file);
+                    document.getElementById("imageModal").src=urlImage;
+                    //console.log("urlImage", urlImage);
+                    document.getElementById("btnViewModal").click();
+
+                }
+                else {
+                    alert("Оберіть файл зображення");
+                }
+
+                
+                //console.log("Select images", files);
+            }
+            else {
+                alert("Оберіть фото");
+            }
+        }
+
+        // formFile.onchange = (event) => {
+        //     selectEventImage(event);
+        // } 
+
+        formFile.addEventListener("change", (event) => {
+            selectEventImage(event);
+        });
+        
+        console.log("formFile", formFile);
+        
+    </script>
+
 </body>
 </html>
