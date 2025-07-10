@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Головна форма</title>
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Створити категорію</h1>
+
+        <form class="col-md-6 offset-md-3 needs-validation" novalidate>
+          <div class="mb-3">
+            <label for="title" class="form-label">Назва</label>
+            <input type="text" class="form-control" id="title" name="title" required>
+            <div class="invalid-feedback">Вкажіть назву</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="priority" class="form-label">Пріорітет</label>
+            <input type="number" class="form-control" id="priority" name="priority" required>
+            <div class="invalid-feedback">Вкажіть пріорітет</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="urlSlug" class="form-label">Слаг</label>
+            <input type="text" class="form-control" id="urlSlug" name="urlSlug" required>
+            <div class="invalid-feedback">Вкажіть слаг</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="image" class="form-label">Фото</label>
+            <input type="file" class="form-control" id="image" name="image" required accept="image/*">
+            <div class="invalid-feedback">Оберіть фото</div>
+          </div>
+          
+          <button type="submit" class="btn btn-primary">Створити</button>
+        </form>
+
+    </div>
+    
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/node_modules/axios/dist/axios.min.js"></script>
+
+    <script>
+        (() => {
+            //Строгій режим - Цей код має працювати скрізь. Стабільна версія
+            'use strict'
+
+            const forms = document.querySelectorAll(".needs-validation");
+            let imageBase64;
+
+            // document.getElementById("image").addEventListener("change", (e) => {
+            //     console.log("Select file", e.target.files);
+            // //    if
+            // });
+
+            document.getElementById('image').addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imageBase64 = e.target.result;
+                    //console.log("Base64 image loaded:", imageBase64);
+                };
+                reader.readAsDataURL(file); //Провокуємо читання файлу
+            });
+
+
+            //console.log("Привіт я консоль", forms);
+
+            forms.forEach(form => {
+                console.log("foreach forms", form);
+
+                form.addEventListener("submit", e => {
+                    if(!form.checkValidity()) {
+                        e.preventDefault();
+                    }
+
+                    else {
+                        //перетворюмо дані у json
+                        const formData = new FormData(form);
+                        const model = Object.fromEntries(formData.entries());
+                        model.image = imageBase64;
+                        //console.log("Server send", model);
+                        axios.post("https://lohika.itstep.click/api/categories/add", model)
+                        .then(result => {
+                            console.log("Успішно зроблено", result);
+                        })
+                        .catch(error => {
+                            console.log("Error server", error);
+                        });
+                        e.preventDefault();
+                    }
+
+
+                    form.classList.add("was-validated");
+                });
+
+            });
+
+        })();
+
+    </script>
+</body>
+</html>
