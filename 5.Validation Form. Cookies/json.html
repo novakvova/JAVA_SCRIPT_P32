@@ -28,7 +28,6 @@
                         </tr>
                     </thead>
                     <tbody id="usersTableBody">
-                        
                     </tbody>
                 </table>
 
@@ -51,16 +50,22 @@
             // Тут можна відслідковувати процес проходження запиту
             if (xhr.status === 200) { // Якщо статус 200 - все ок
                 //Це рядок тексту
-                console.log("Users json", xhr.response); // Виводимо відповідь сервера
+                //console.log("Users json", xhr.response); // Виводимо відповідь сервера
                 const users = JSON.parse(xhr.response); // Парсимо JSON рядок в об'єкт
-                console.log("Object users", users); // Виводимо масив об'єктів користувачів
-                const usersTableBody = document.getElementById("usersTableBody");
-                usersTableBody.innerHTML = ""; // Очищаємо таблицю
-                //index - це порядковий номер елемента в масиві
-                users.forEach((user, index) => {
-                    //Проходимося по кожному користувачу
-                    const tr = document.createElement("tr"); // Створюємо рядок таблиці
-                    tr.innerHTML = `
+                //console.log("Object users", users); // Виводимо масив об'єктів користувачів
+                viewListUsers(users); // Викликаємо функцію для відображення користувачів
+            }
+        };
+        xhr.send(); // Відправляємо запит на сервер
+
+        const viewListUsers = (listUsers) => {
+            const usersTableBody = document.getElementById("usersTableBody");
+            usersTableBody.innerHTML = ""; // Очищаємо таблицю
+            //index - це порядковий номер елемента в масиві
+            listUsers.forEach((user, index) => {
+                //Проходимося по кожному користувачу
+                const tr = document.createElement("tr"); // Створюємо рядок таблиці
+                tr.innerHTML = `
                         <tr>
                             <th scope="row">
                                 ${index + 1}
@@ -76,12 +81,12 @@
                             <td>${user.email}</td>
                         </tr>
                     `; // Заповнюємо рядок даними користувача
-                    usersTableBody.appendChild(tr); // Додаємо рядок в таблицю
-                });
-            
-            }
-        };
-        xhr.send(); // Відправляємо запит на сервер
+                usersTableBody.appendChild(tr); // Додаємо рядок в таблицю
+            });
+
+
+        }
+
     </script>
 
 
